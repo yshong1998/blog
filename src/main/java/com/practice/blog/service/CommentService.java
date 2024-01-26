@@ -8,8 +8,10 @@ import com.practice.blog.domain.entity.User;
 import com.practice.blog.repository.CommentRepository;
 import com.practice.blog.repository.PostRepository;
 import com.practice.blog.repository.UserRepository;
+import com.practice.blog.response.message.SuccessMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,16 +24,17 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void createComment(CommentRequestDto commentRequestDto, Long postId, HttpServletRequest request) {
+    public ResponseEntity<SuccessMessage> createComment(CommentRequestDto commentRequestDto, Long postId, HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 포스트입니다.")
         );
         commentRepository.save(new Comment(user, post, commentRequestDto));
+        return ResponseEntity.ok(SuccessMessage.POST_COMMENT_SUCCESS);
     }
 
     @Transactional
-    public void updateComment(CommentRequestDto commentRequestDto, Long postId, Long commentId, HttpServletRequest request) {
+    public ResponseEntity<SuccessMessage> updateComment(CommentRequestDto commentRequestDto, Long postId, Long commentId, HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 포스트입니다.")
@@ -39,9 +42,10 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 댓글입니다.")
         );
-        if (!comment.getWriter().equals(user)){
+        if (!comment.getWriter().equals(user)) {
             throw new IllegalArgumentException("권한이 없습니다..");
         }
         comment.update(commentRequestDto);
+        return ResponseEntity.ok(SuccessMessage.PUT_COMMENT_SUCCESS);
     }
 }

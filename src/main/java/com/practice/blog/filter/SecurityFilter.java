@@ -46,7 +46,6 @@ public class SecurityFilter implements Filter {
                 jwtUtil.validateToken(token);
                 // 토큰에서 사용자 정보 가져오기
                 Claims info = jwtUtil.getUserInfoFromToken(token);
-                log.info(info.getSubject());
                 User user = userRepository.findByNickname(info.getSubject()).orElseThrow(() ->
                         new IllegalArgumentException("존재하지 않는 사용자입니다.")
                 );

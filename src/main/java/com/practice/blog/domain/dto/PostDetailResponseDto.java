@@ -18,7 +18,7 @@ public class PostDetailResponseDto {
 
     private final String summary;
 
-    private final User writer;
+    private final String writer;
 
     private final List<CommentResponseDto> commentResponseDtos;
 
@@ -27,7 +27,7 @@ public class PostDetailResponseDto {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.summary = post.getSummary();
-        this.writer = post.getWriter();
+        this.writer = post.getWriter().getNickname();
         this.commentResponseDtos = commentResponseDtos;
     }
 }

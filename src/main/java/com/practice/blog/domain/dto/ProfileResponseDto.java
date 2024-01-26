@@ -2,6 +2,7 @@ package com.practice.blog.domain.dto;
 
 import com.practice.blog.domain.entity.User;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class ProfileResponseDto {

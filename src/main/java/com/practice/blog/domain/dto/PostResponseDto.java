@@ -15,13 +15,13 @@ public class PostResponseDto {
 
     private final String summary;
 
-    private final User writer;
+    private final String writer;
 
     public PostResponseDto(Post post){
         this.id = post.getId();
         this.title = post.getTitle();
         this.summary = post.getSummary();
         this.content = post.getContent();
-        this.writer = post.getWriter();
+        this.writer = post.getWriter().getNickname();
     }
 }
