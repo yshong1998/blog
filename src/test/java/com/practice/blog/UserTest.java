@@ -31,12 +31,6 @@ public class UserTest {
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
     private MockMvc mockMvc;
 
     private ObjectMapper objectMapper = new ObjectMapper();
