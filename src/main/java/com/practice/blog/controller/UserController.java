@@ -3,7 +3,7 @@ package com.practice.blog.controller;
 import com.practice.blog.domain.dto.LoginRequestDto;
 import com.practice.blog.domain.dto.ProfileResponseDto;
 import com.practice.blog.domain.dto.SignupRequestDto;
-import com.practice.blog.response.message.SuccessMessage;
+import com.practice.blog.response.message.MessageResponseDto;
 import com.practice.blog.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,12 +20,12 @@ public class UserController {
 
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<SuccessMessage> signup(@RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<MessageResponseDto> signup(@RequestBody SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SuccessMessage> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response){
+    public ResponseEntity<MessageResponseDto> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response){
         return userService.login(loginRequestDto, response);
     }
 

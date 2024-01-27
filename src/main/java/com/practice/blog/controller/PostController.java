@@ -3,7 +3,7 @@ package com.practice.blog.controller;
 import com.practice.blog.domain.dto.PostDetailResponseDto;
 import com.practice.blog.domain.dto.PostRequestDto;
 import com.practice.blog.domain.dto.PostResponseDto;
-import com.practice.blog.response.message.SuccessMessage;
+import com.practice.blog.response.message.MessageResponseDto;
 import com.practice.blog.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,13 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<SuccessMessage> createPost(@RequestBody PostRequestDto postRequestDto,
-                                                     HttpServletRequest request) {
+    public ResponseEntity<MessageResponseDto> createPost(@RequestBody PostRequestDto postRequestDto,
+                                                         HttpServletRequest request) {
         return postService.createPost(postRequestDto, request);
     }
 
     @PutMapping("{postId}")
-    public ResponseEntity<SuccessMessage> updatePost(@PathVariable Long postId,
+    public ResponseEntity<MessageResponseDto> updatePost(@PathVariable Long postId,
                            @RequestBody PostRequestDto postRequestDto,
                            HttpServletRequest request) {
         return postService.updatePost(postId, postRequestDto, request);

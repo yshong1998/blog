@@ -9,7 +9,7 @@ import com.practice.blog.domain.entity.Post;
 import com.practice.blog.domain.entity.User;
 import com.practice.blog.repository.CommentRepository;
 import com.practice.blog.repository.PostRepository;
-import com.practice.blog.response.message.SuccessMessage;
+import com.practice.blog.response.message.MessageResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.practice.blog.response.message.SuccessMessage.POST_POSTING_SUCCESS;
+import static com.practice.blog.response.message.SuccessMessage.PUT_POSTING_SUCCESS;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,14 +33,14 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public ResponseEntity<SuccessMessage> createPost(PostRequestDto postRequestDto, HttpServletRequest request) {
+    public ResponseEntity<MessageResponseDto> createPost(PostRequestDto postRequestDto, HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         postRepository.save(new Post(postRequestDto, user));
-        return ResponseEntity.ok(SuccessMessage.POST_POSTING_SUCCESS);
+        return ResponseEntity.ok(new MessageResponseDto(POST_POSTING_SUCCESS));
     }
 
     @Transactional
-    public ResponseEntity<SuccessMessage> updatePost(Long postId, PostRequestDto postRequestDto, HttpServletRequest request) {
+    public ResponseEntity<MessageResponseDto> updatePost(Long postId, PostRequestDto postRequestDto, HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 포스트입니다.")
@@ -46,7 +49,7 @@ public class PostService {
             throw new IllegalArgumentException("권한이 없습니다.");
         }
         post.update(postRequestDto);
-        return ResponseEntity.ok(SuccessMessage.PUT_POSTING_SUCCESS);
+        return ResponseEntity.ok(new MessageResponseDto(PUT_POSTING_SUCCESS));
     }
 
     @Transactional(readOnly = true)

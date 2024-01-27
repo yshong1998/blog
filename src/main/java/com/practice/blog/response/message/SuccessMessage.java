@@ -1,9 +1,6 @@
 package com.practice.blog.response.message;
 
-import lombok.Getter;
-
-@Getter
-public enum SuccessMessage {
+public enum SuccessMessage implements Message{
 
     // Users
     POST_SIGNUP_SUCCESS("회원 가입에 성공했습니다."),
@@ -22,5 +19,10 @@ public enum SuccessMessage {
 
     SuccessMessage(String message){
         this.message = message;
+    }
+
+    @Override
+    public String returnMessageAsString() {
+        return message;
     }
 }
