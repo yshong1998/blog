@@ -32,6 +32,7 @@ public class SecurityFilter implements Filter {
         if (url.contains("signup") ||
                 url.contains("login") ||
                 url.contains("h2-console") ||
+                url.contains("docs") ||
                 (url.contains("posts") && method.equals("GET"))) {
             chain.doFilter(request, response);
         } else {

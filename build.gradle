@@ -56,11 +56,11 @@ jar {
     enabled = false
 }
 
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
 
 asciidoctor {
+    doFirst {
+        delete file("src/main/resources/static/docs")
+    }
     inputs.dir snippetsDir
     configurations 'asciidoctorExt'
     dependsOn test
