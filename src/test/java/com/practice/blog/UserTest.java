@@ -37,7 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @ExtendWith(RestDocumentationExtension.class)
 public class UserTest {
 

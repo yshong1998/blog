@@ -5,10 +5,11 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
-group = 'com.practice'
-version = '0.0.1-SNAPSHOT'
+
 
 java {
+    group = 'com.practice'
+    version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '17'
 }
 
@@ -43,12 +44,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
 ext {
-    snippetsDir = file('build/generated/snippets')
+    snippetsDir = file('build/generated-snippets')
 }
 
 test {
@@ -59,14 +56,14 @@ jar {
     enabled = false
 }
 
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
 asciidoctor {
     inputs.dir snippetsDir
     configurations 'asciidoctorExt'
     dependsOn test
-}
-
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
 }
 
 task copyDocument(type: Copy) {
@@ -79,8 +76,6 @@ build {
     dependsOn copyDocument
 }
 
-bootJar{
-    dependsOn("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
+tasks.named('test') {
+    useJUnitPlatform()
 }
