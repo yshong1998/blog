@@ -12,6 +12,7 @@
 
 [API specification HTML - Generated via Spring Rest Docs](src/main/resources/static/docs/userdocs.html)
 
+배포 후 추가 예정
 ### Domain
   - User
     1. 회원 가입 (필수 필드: 이메일, 닉네임, 비밀번호)
