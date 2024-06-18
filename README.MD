@@ -25,7 +25,7 @@
 
 ## 📊 ERD
 
-- 추가 예정
+![blogERD.png](images/blogERD.png)
 
 ## 🔨 트러블슈팅
 
