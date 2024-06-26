@@ -20,5 +20,4 @@ public class SignupForm {
     private String profileImageUrl;
     private String introduce;
     private String adminCode;
-
 }

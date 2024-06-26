@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/signup")
     public String getSignupForm(@ModelAttribute("signupForm") SignupForm form){
-        return "users/signupForm";
+        return "loginPage";
     }
 
     @PostMapping("/signup")
@@ -28,5 +28,4 @@ public class UserController {
         userservice.signup(form);
         return "redirect:/";
     }
-
 }

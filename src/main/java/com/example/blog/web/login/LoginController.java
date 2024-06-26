@@ -25,7 +25,7 @@ public class LoginController {
                         HttpServletRequest request){
         // 아이디 비밀번호가 틀린 경우가 아닌 그 외의 에러가 있을 경우
         if (bindingResult.hasErrors()){
-            return "/login/loginForm";
+            return "/loginPage";
         }
 
         // 로그인 시도
@@ -34,7 +34,7 @@ public class LoginController {
         // 아이디 비밀번호가 일치하는 유저가 없는 경우
         if (loginUser == null){
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "/login/loginForm";
+            return "/loginPage";
         }
 
         // 도달 시 로그인 성공.
