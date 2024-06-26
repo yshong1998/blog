@@ -37,7 +37,7 @@ public class User {
         this.loginPassword = form.getLoginPassword();
         this.email = form.getEmail();
         this.role = role;
-        this.profileImageUrl = form.getProfileImageUrl();
+        this.profileImageUrl = "tempUrl";
         this.introduce = form.getIntroduce();
     }
 

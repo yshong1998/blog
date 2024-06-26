@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -20,8 +21,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
+    public String getLoginForm(@ModelAttribute LoginForm loginForm){
+        return "/loginPage";
+    }
+
+    @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/") String redirectUrl,
+                        @RequestParam(defaultValue = "/home") String redirectUrl,
                         HttpServletRequest request){
         // 아이디 비밀번호가 틀린 경우가 아닌 그 외의 에러가 있을 경우
         if (bindingResult.hasErrors()){

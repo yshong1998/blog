@@ -17,7 +17,7 @@ public class SignupForm {
     @NotEmpty
     @Email
     private String email;
-    private String profileImageUrl;
+//    private MultipartFile profileImage;
     private String introduce;
     private String adminCode;
 }

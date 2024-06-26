@@ -25,7 +25,6 @@ public class PostController {
     @GetMapping("/api/post")
     public String getPosts(Model model){
         List<PostResponseDto> posts = postService.getPosts();
-        System.out.println(posts.get(0).getThumbnail());
         model.addAttribute("posts", posts);
         return "index";
     }

@@ -2,6 +2,7 @@ package com.example.blog.web.user;
 
 import com.example.blog.domain.user.UserService;
 import jakarta.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,15 +18,16 @@ public class UserController {
 
     @GetMapping("/signup")
     public String getSignupForm(@ModelAttribute("signupForm") SignupForm form){
-        return "loginPage";
+        return "signupPage";
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid @ModelAttribute SignupForm form, BindingResult bindingResult){
+    public String signup(@Valid @ModelAttribute SignupForm form, BindingResult bindingResult)
+            throws SQLIntegrityConstraintViolationException {
         if (bindingResult.hasErrors()){
-            return "users/signupForm";
+            return "signupPage";
         }
-        userservice.signup(form);
-        return "redirect:/";
+        String redirectionUrl = userservice.signup(form, bindingResult);
+        return "redirect:/" + redirectionUrl;
     }
 }
