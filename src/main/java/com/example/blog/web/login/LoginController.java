@@ -2,7 +2,7 @@ package com.example.blog.web.login;
 
 import com.example.blog.domain.login.LoginService;
 import com.example.blog.domain.user.User;
-import com.example.blog.global.session.SessionConst;
+import com.example.blog.global.security.SecurityConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -26,8 +26,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/home") String redirectUrl,
+    public String login(
+            @Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectUrl,
                         HttpServletRequest request){
         // 아이디 비밀번호가 틀린 경우가 아닌 그 외의 에러가 있을 경우
         if (bindingResult.hasErrors()){
@@ -45,7 +46,7 @@ public class LoginController {
 
         // 도달 시 로그인 성공.
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.BLOG_SID, loginUser);
+        session.setAttribute(SecurityConst.BLOG_SID, loginUser);
         return "redirect:" + redirectUrl;
     }
 
