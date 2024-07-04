@@ -4,6 +4,7 @@ import com.example.blog.domain.user.UserService;
 import jakarta.validation.Valid;
 import java.sql.SQLIntegrityConstraintViolationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class UserController {
 
@@ -24,10 +26,12 @@ public class UserController {
     @PostMapping("/signup")
     public String signup(@Valid @ModelAttribute SignupForm form, BindingResult bindingResult)
             throws SQLIntegrityConstraintViolationException {
+        log.info(form.getEmail());
+        log.info(form.getProfileImage().getName());
         if (bindingResult.hasErrors()){
             return "signupPage";
         }
         String redirectionUrl = userservice.signup(form, bindingResult);
-        return "redirect:/" + redirectionUrl;
+        return "redirect:" + redirectionUrl;
     }
 }

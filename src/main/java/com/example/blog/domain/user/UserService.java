@@ -2,17 +2,22 @@ package com.example.blog.domain.user;
 
 import static com.example.blog.domain.user.Role.*;
 
+import com.example.blog.domain.s3.S3Const;
+import com.example.blog.domain.s3.S3Uploader;
 import com.example.blog.web.user.SignupForm;
 import java.sql.SQLIntegrityConstraintViolationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
+    private final S3Uploader s3Uploader;
     private final String ADMIN_CODE = "1234";
 
     @Transactional
@@ -27,7 +32,11 @@ public class UserService {
             }
         }
         User signupUser = new User(form, userRole);
+        if (!form.getProfileImage().isEmpty()){
+            String uploadLocation = s3Uploader.saveFile(form.getProfileImage(), S3Const.USER_PROFILE_IMAGE_UPLOAD_DIRECTORY);
+            signupUser.setProfileImageUrl(uploadLocation);
+        }
         userRepository.save(signupUser);
-        return "home";
+        return "/";
     }
 }

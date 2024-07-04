@@ -11,4 +11,9 @@ public class HomeController {
         return "redirect:/post";
     }
 
+    @GetMapping("/write")
+    public String getPostView(){
+        return "writePostPage";
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.blog.domain.user;
 
+import com.example.blog.domain.s3.S3Const;
 import com.example.blog.web.user.SignupForm;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,8 +38,12 @@ public class User {
         this.loginPassword = form.getLoginPassword();
         this.email = form.getEmail();
         this.role = role;
-        this.profileImageUrl = "tempUrl";
+        this.profileImageUrl = S3Const.DEFAULT_PROFILE_IMAGE_FILE_LOCATION;
         this.introduce = form.getIntroduce();
+    }
+
+    void setProfileImageUrl(String profileImageUrl){
+        this.profileImageUrl = profileImageUrl;
     }
 
 }

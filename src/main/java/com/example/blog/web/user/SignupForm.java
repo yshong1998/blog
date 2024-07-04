@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class SignupForm {
     @NotEmpty
     @Email
     private String email;
-//    private MultipartFile profileImage;
+    private MultipartFile profileImage;
     private String introduce;
     private String adminCode;
 }
