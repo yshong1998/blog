@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @NoArgsConstructor
 public class SignupForm {
+    private String username;
     @NotEmpty
     private String loginId;
     @NotEmpty

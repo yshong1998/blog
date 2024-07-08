@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
     <header class="header_block">
         <div class="header_innerBlock" style="display: flex; justify-content: space-between; padding-left: 1rem">
             <div class="HeaderLogo_block" style="display: flex; margin-top: 1rem; margin-left: 1rem">
-                <a href="/home">
+                <a href="/">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 48" class="velogLogo"
                          data-testid="velog-logo" width="71" height="48">
                         <path fill="currentColor"
@@ -80,14 +80,25 @@
     </div>
     <div class="post-grid-wrapper" style="width: 100%; margin-top: 32px; margin-bottom: 16px;">
         <div class="row" style="margin: auto; padding-left: 16px;padding-right: 16px;">
-            <div class="card" style="width: 24rem; margin: 10px" th:each="post : ${posts}">
-                <img th:src="${post.thumbnail}" class="card-img-top" alt="no img">
-                <div class="card-body">
-                    <h4 class="card-title" th:text="${post.title}">제목입니다</h4>
-                    <p class="card-contents" th:text="${post.contents}">내용입니다</p>
-                    <p class="card-subInfo">부가 정보입니다</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+            <div class="card" style="width: 24rem; margin: 10px;" th:each="post : ${posts}">
+                <a th:onclick="|location.href='@{/post/}| + ${post.id} + |'|">
+                    <img th:src="${post.thumbnail}" class="card-img-top" alt="no img" style="cursor: pointer">
+                    <div class="card-body" style=" cursor: pointer">
+                        <h4 class="card-title" th:text="${post.title}">제목입니다</h4>
+                        <p class="card-contents" th:text="${post.contentsSummary}">내용입니다</p>
+                        <p class="card-subInfo" th:text="${#temporals.format(post.createdAt,'yyyy년 MM월 dd일 작성')}"></p>
+                    </div>
+                </a>
+                <a th:onclick="|location.href='@{/user/}| + ${user.id} + |'|">
+                    <div class="card-footer">
+                        <div style="display: flex; border-right: 8px; cursor: pointer">
+                            <img alt="user thumbnail" width="30" height="30" decoding="async"
+                                 data-nimg="1" th:src="${post.authorProfileImageUrl}"
+                                 style="color: transparent; border-radius: 50%; margin-right: 12px"> by
+                            <p th:text="${post.getAuthorName()}" class="author-name" style="margin-left: 6px"></p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

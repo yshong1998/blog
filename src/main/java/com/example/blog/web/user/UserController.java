@@ -26,8 +26,6 @@ public class UserController {
     @PostMapping("/signup")
     public String signup(@Valid @ModelAttribute SignupForm form, BindingResult bindingResult)
             throws SQLIntegrityConstraintViolationException {
-        log.info(form.getEmail());
-        log.info(form.getProfileImage().getName());
         if (bindingResult.hasErrors()){
             return "signupPage";
         }

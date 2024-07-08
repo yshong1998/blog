@@ -32,6 +32,7 @@ public class User {
     private Role role;
     private String profileImageUrl;
     private String introduce;
+    public String userName;
 
     public User(SignupForm form, Role role){
         this.loginId = form.getLoginId();
@@ -40,6 +41,7 @@ public class User {
         this.role = role;
         this.profileImageUrl = S3Const.DEFAULT_PROFILE_IMAGE_FILE_LOCATION;
         this.introduce = form.getIntroduce();
+        this.userName = form.getUsername();
     }
 
     void setProfileImageUrl(String profileImageUrl){

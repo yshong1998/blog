@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -12,9 +13,12 @@ import lombok.Setter;
 public class PostRequestDto {
 
     private String title;
+    private String tag;
     private String contents;
     private Boolean isTemp;
-    private String thumbnail;
+    private MultipartFile thumbnail;
+    private String summary;
+    private String seriesTitle;
 
 
 }
