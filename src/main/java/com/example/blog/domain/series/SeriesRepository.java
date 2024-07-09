@@ -5,6 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SeriesRepository extends JpaRepository<Series, Long> {
-    List<Series> findAllByUserId(Long userId);
-    Optional<Series> findByUserIdAndSeriesTitle(Long userId, String seriesTitle);
+    List<Series> findAllByBlogId(Long blogId);
+    Optional<Series> findByBlogIdAndSeriesTitle(Long id, String seriesTitle);
 }

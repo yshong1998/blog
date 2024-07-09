@@ -66,6 +66,11 @@
                    th:errorclass="field-error">
         </div>
         <div>
+            <label for="blogTitle">블로그 제목</label>
+            <input type="text" id="blogTitle" th:field="*{blogTitle}" class="form-control" placeholder="example.log"
+                   th:errorclass="field-error">
+        </div>
+        <div>
             <label for="introduce">관리자 가입 코드</label>
             <input type="text" id="adminCode" th:field="*{adminCode}" class="form-control"
                    th:errorclass="field-error">

@@ -1,5 +1,7 @@
 package com.example.blog.domain.post;
 
+import com.example.blog.domain.blog.Blog;
+import com.example.blog.domain.blog.BlogRepository;
 import com.example.blog.domain.s3.S3Const;
 import com.example.blog.domain.s3.S3Uploader;
 import com.example.blog.domain.series.Series;
@@ -24,19 +26,22 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final SeriesRepository seriesRepository;
+    private final BlogRepository blogRepository;
     private final S3Uploader s3Uploader;
 
     @Transactional
-    public PostResponseDto createPost(PostRequestDto postRequestDto, User user){
+    public PostResponseDto createPost(PostRequestDto postRequestDto, User user) {
+        Blog userBlog = blogRepository.findByUserId(user.getId());
         Optional<Series> selectedSeries = seriesRepository
-                .findByUserIdAndSeriesTitle(user.getId(),postRequestDto.getSeriesTitle());
-        Post post = selectedSeries.isEmpty() ? new Post(postRequestDto, user, null) :new Post(postRequestDto, user, selectedSeries.get());
-        if (!postRequestDto.getThumbnail().isEmpty()){
-            String thumbnailUrl = s3Uploader.saveFile(postRequestDto.getThumbnail(), S3Const.POST_THUMBNAIL_UPLOAD_DIRECTORY);
+                .findByBlogIdAndSeriesTitle(userBlog.getId(), postRequestDto.getSeriesTitle());
+        Post post = selectedSeries.isEmpty() ?
+                new Post(postRequestDto, userBlog, null) : new Post(postRequestDto, userBlog, selectedSeries.get());
+        if (!postRequestDto.getThumbnail().isEmpty()) {
+            String thumbnailUrl = s3Uploader.saveFile(postRequestDto.getThumbnail(),
+                    S3Const.POST_THUMBNAIL_UPLOAD_DIRECTORY);
             post.setThumbnailUrl(thumbnailUrl);
         }
         postRepository.save(post);
-
         log.info("게시글 저장 완료");
         return new PostResponseDto(post);
     }
@@ -56,8 +61,5 @@ public class PostService {
                 () -> new IllegalArgumentException("존재하지 않는 게시글입니다.")
         );
         return new PostResponseDto(post);
-
-
-
     }
 }

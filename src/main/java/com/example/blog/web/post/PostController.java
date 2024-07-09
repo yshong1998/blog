@@ -40,9 +40,10 @@ public class PostController {
     }
 
     @GetMapping("/post/{post_id}")
-    public String getPost(@PathVariable Long post_id, Model model){
+    public String getPost(@SessionAttribute(name = SecurityConst.BLOG_SID, required = false)User user, @PathVariable Long post_id, Model model){
         PostResponseDto post = postService.getPost(post_id);
         model.addAttribute("post", post);
+        model.addAttribute("user", user);
         return "postDetailPage";
     }
 }

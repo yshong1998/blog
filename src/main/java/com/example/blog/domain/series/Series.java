@@ -1,6 +1,6 @@
 package com.example.blog.domain.series;
 
-import com.example.blog.domain.user.User;
+import com.example.blog.domain.blog.Blog;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +20,11 @@ public class Series {
     private Long id;
     private String seriesTitle;
     @ManyToOne
-    private User user;
+    private Blog blog;
+
+    public Series(Blog blog, String seriesTitle){
+        this.blog = blog;
+        this.seriesTitle = seriesTitle;
+    }
 
 }

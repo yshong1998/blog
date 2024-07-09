@@ -22,7 +22,7 @@ public class CardViewPostDto {
         this.createdAt = post.getCreatedAt();
         this.viewCount = post.getViewCount();
         this.thumbnail = post.getThumbnailUrl();
-        this.authorName = post.getAuthor().getUserName();
-        this.authorProfileImageUrl = post.getAuthor().getProfileImageUrl();
+        this.authorName = post.getAuthorBlog().getUserName();
+        this.authorProfileImageUrl = post.getAuthorBlog().getProfileImageUrl();
     }
 }

@@ -2,6 +2,8 @@ package com.example.blog.domain.user;
 
 import static com.example.blog.domain.user.Role.*;
 
+import com.example.blog.domain.blog.Blog;
+import com.example.blog.domain.blog.BlogRepository;
 import com.example.blog.domain.s3.S3Const;
 import com.example.blog.domain.s3.S3Uploader;
 import com.example.blog.web.user.SignupForm;
@@ -18,6 +20,7 @@ import org.springframework.validation.BindingResult;
 public class UserService {
     private final UserRepository userRepository;
     private final S3Uploader s3Uploader;
+    private final BlogRepository blogRepository;
     private final String ADMIN_CODE = "1234";
 
     @Transactional
@@ -36,7 +39,8 @@ public class UserService {
             String uploadLocation = s3Uploader.saveFile(form.getProfileImage(), S3Const.USER_PROFILE_IMAGE_UPLOAD_DIRECTORY);
             signupUser.setProfileImageUrl(uploadLocation);
         }
-        userRepository.save(signupUser);
+        User user = userRepository.save(signupUser);
+        blogRepository.save(new Blog(user, form.getBlogTitle()));
         return "/";
     }
 }

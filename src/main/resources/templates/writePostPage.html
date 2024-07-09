@@ -137,6 +137,18 @@
         .series-list div:hover {
             background-color: #ddd;
         }
+
+        .series-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .series-buttons button {
+            flex: 1;
+            margin: 0 5px;
+        }
     </style>
 </head>
 <body>
@@ -170,11 +182,18 @@
                 <label for="summary">요약 소개글</label>
                 <textarea id="summary" name="summary" rows="4" th:field="${postRequestDto.summary}" placeholder="게시글의 요약 소개글을 작성하세요."></textarea>
 
-                <button type="button" id="seriesButton" onclick="toggleSeriesSelect()">시리즈 선택</button>
+                <div class="series-buttons">
+                    <button type="button" id="seriesButton" onclick="toggleSeriesSelect()">시리즈 선택</button>
+                    <button type="button" id="createSeriesButton" onclick="toggleSeriesInput()">시리즈 생성</button>
+                </div>
                 <div class="series-select">
                     <div class="series-list" id="seriesList">
                         <!-- 사용자가 생성한 시리즈 목록이 여기 나타납니다 -->
                     </div>
+                </div>
+                <div id="newSeriesInputContainer" class="series-select">
+                    <input type="text" id="newSeriesName" placeholder="새 시리즈 이름 입력">
+                    <button type="button" onclick="createSeries()">시리즈 생성</button>
                 </div>
 
                 <input type="hidden" id="selectedSeries" name="selectedSeries" th:field="${postRequestDto.seriesTitle}">
@@ -234,10 +253,48 @@
         seriesSelect.style.display = seriesSelect.style.display === 'block' ? 'none' : 'block';
     }
 
+    function toggleSeriesInput() {
+        const newSeriesInputContainer = document.getElementById('newSeriesInputContainer');
+        newSeriesInputContainer.style.display = newSeriesInputContainer.style.display === 'block' ? 'none' : 'block';
+    }
+
+
     function selectSeries(series) {
         const selectedSeriesInput = document.getElementById('selectedSeries');
         selectedSeriesInput.value = series;
         alert(series + ' 선택됨');
+    }
+    function createSeries() {
+        const newSeriesName = document.getElementById('newSeriesName').value.trim();
+        if (newSeriesName) {
+            fetch('/series', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify({ seriesTitle: newSeriesName })
+                body: newSeriesName
+            })
+                .then(response => response)
+                .then(data => {
+                    alert('시리즈가 생성되었습니다.');
+                    const seriesListContainer = document.getElementById('seriesList');
+                    const seriesItem = document.createElement('div');
+                    seriesItem.textContent = newSeriesName;
+                    seriesItem.onclick = function() {
+                        selectSeries(newSeriesName);
+                    };
+                    seriesListContainer.appendChild(seriesItem);
+                    document.getElementById('newSeriesName').value = '';
+                    toggleSeriesInput();
+                })
+                .catch(error => {
+                    console.error('Error creating series:', error);
+                    alert('시리즈 생성 중 오류가 발생했습니다.');
+                });
+        } else {
+            alert('새 시리즈 이름을 입력하세요.');
+        }
     }
 
     function submitPost() {
